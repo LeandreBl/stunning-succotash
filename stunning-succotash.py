@@ -49,7 +49,8 @@ with open(sys.argv[1], 'r', errors='ignore') as intra_csv:
         attendances = initial_presence_dict(intra_csv['login'])
         for name in attendances.keys():
             epur_name = remove_dot_spaces(name.replace('@epitech.eu', ''))
-            names = difflib.get_close_matches(epur_name, attendance_csv['nom complet'])
+            case = 'nom complet' if 'nom complet' in attendance_csv else 'full name'
+            names = difflib.get_close_matches(epur_name, attendance_csv[case])
             if len(names) > 0:
                 attendances[name] = 'present'
         print_csv(attendances)
